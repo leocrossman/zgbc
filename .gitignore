@@ -13,6 +13,7 @@ web-report/
 
 # project specific
 firebaseCredentials.js
+*.csv
 
 # macOS
 .DS_Store

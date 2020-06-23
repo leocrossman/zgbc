@@ -6,12 +6,11 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  AsyncStorage,
 } from 'react-native';
 
 import * as firebase from 'firebase';
 import 'firebase/auth';
-import config from './firebaseCredentials';
+import config from '../firebaseCredentials';
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
@@ -29,7 +28,6 @@ function App() {
       .signInWithEmailAndPassword(email, pass)
       .then((res) => {
         alert(res.user.email);
-        storeToken(JSON.stringify(res.user));
       })
       .catch((error) => {
         // Handle Errors here.
@@ -45,26 +43,9 @@ function App() {
     setPass(text);
   };
 
-  const storeToken = async (user) => {
-    try {
-      await AsyncStorage.setItem('userData', JSON.stringify(user));
-    } catch (error) {
-      console.log('Something went wrong...\n', error);
-    }
-  };
-
-  const getToken = async (user) => {
-    try {
-      let userData = await AsyncStorage.getItem('userData');
-      let data = JSON.parse(userData);
-      console.log(data);
-    } catch (error) {
-      console.log('Something went wrong...\n', error);
-    }
-  };
-
   return (
     <View style={styles.container}>
+      <Loading></Loading>
       <Text style={styles.title}>Welcome to the ZGBC App</Text>
       <TextInput
         style={styles.input}
