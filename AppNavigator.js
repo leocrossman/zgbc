@@ -4,6 +4,7 @@ import Home from './components/Home';
 const AppNavigator = createStackNavigator({
   Home: {
     screen: Home,
+    navigationOptions: { headerShown: false },
   },
 });
 
