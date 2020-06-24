@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import config from '../firebaseCredentials';
+import { NavigationEvents } from 'react-navigation';
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
@@ -78,7 +79,8 @@ function getName(email) {
   }
 })();
 
-function Home() {
+function Home({ navigation }) {
+  console.log(navigation);
   // state hook declarations
   const [email, setEmail] = useState('');
 
@@ -90,7 +92,8 @@ function Home() {
       // store the email
       await _storeData(email);
       // take them to the next page here!
-      alert(`Hello ${getName(email)}.`);
+      // alert(`Hello ${getName(email)}.`);
+      navigation.navigate('Symptoms');
     } else {
       alert('Please enter a valid ZGBC email.');
     }
@@ -116,11 +119,14 @@ function Home() {
         onSubmitEditing={() => login(email)}
         returnKeyType='done'
       />
+
       <TouchableOpacity
         style={styles.submitButton}
-        onPress={() => login(email)}
+        onPress={() => {
+          login(email);
+        }}
       >
-        <Text style={styles.submitButtonText}> Submit </Text>
+        <Text style={styles.submitButtonText}> Check in </Text>
       </TouchableOpacity>
     </View>
   );
