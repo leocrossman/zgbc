@@ -70,34 +70,58 @@ function getName(email) {
   }
 }
 
-(async () => {
-  if (await _retrieveData()) {
-    let storedEmail = await _retrieveData();
-    console.log('the stored email is: ', storedEmail);
-    const isKnown = validateName(storedEmail);
-    console.log(isKnown);
-  }
-})();
+// maybe uncomment? TO DO: COME Back
+// (async () => {
+//   if (await _retrieveData()) {
+//     let storedEmail = await _retrieveData();
+//     console.log('the stored email is: ', storedEmail);
+//     const isKnown = validateName(storedEmail);
+//     console.log(isKnown);
+//   }
+// })();
+
+const isLoggedIn = (email) => validateName(email);
 
 function Home({ navigation }) {
-  console.log(navigation);
   // state hook declarations
   const [email, setEmail] = useState('');
+  const [button, setButton] = useState(isLoggedIn);
 
   let emailIsValid = validateName(email);
   console.log('emailIsValid:', emailIsValid);
-
   const login = async (email) => {
     if (validateName(email)) {
       // store the email
       await _storeData(email);
       // take them to the next page here!
       // alert(`Hello ${getName(email)}.`);
-      navigation.navigate('Symptoms');
+
+      navigation.navigate('Symptoms', { name: getName(email), email });
     } else {
       alert('Please enter a valid ZGBC email.');
     }
   };
+
+  // if the user has logged in before, just skip to check-in (no auto submit)
+  // if (isLoggedIn && validateName(email) && button) {
+  //   console.log('email is:', email);
+  //   console.log('first name is:', getName(email));
+  //   navigation.navigate('Symptoms', { name: getName(email) });
+  // }
+  //  else if (isLoggedIn && validateName(email)) {
+  //   navigation.navigate('Symptoms', { name: getName(email) });
+  // }
+
+  // if the user has logged in before, just skip to check-in (no auto submit)
+  (async () => {
+    const retreived = await _retrieveData();
+    if (retreived) {
+      navigation.navigate('Symptoms', {
+        name: getName(retreived),
+        email: retreived,
+      });
+    }
+  })();
 
   return (
     <View style={styles.container}>
@@ -110,6 +134,7 @@ function Home({ navigation }) {
       <Text style={styles.title}>Welcome to the ZGBC App</Text>
       <TextInput
         style={styles.input}
+        // returnKeyType='done'
         underlineColorAndroid='transparent'
         placeholder='Email'
         placeholderTextColor='black'
@@ -117,7 +142,6 @@ function Home({ navigation }) {
         onChangeText={(text) => setEmail(text)}
         value={email}
         onSubmitEditing={() => login(email)}
-        returnKeyType='done'
       />
 
       <TouchableOpacity

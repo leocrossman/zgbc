@@ -1,8 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import Home from './components/Home';
 import Loading from './components/Loading';
-
 import Example from './components/Example';
+import Symptoms from './components/Symptoms';
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -19,7 +19,7 @@ const AppNavigator = createStackNavigator({
   },
   Symptoms: {
     screen: Symptoms,
-    navigationOptions,
+    navigationOptions: { headerShown: false },
   },
 });
 
