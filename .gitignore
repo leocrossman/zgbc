@@ -15,6 +15,7 @@ web-report/
 firebaseCredentials.js
 *.csv
 *.pdf
+spreadsheetId_secret.json
 
 # macOS
 .DS_Store

@@ -62,10 +62,19 @@ function validateName(email) {
 }
 
 // get the firstname associated with a valid ZGBC email
-function getName(email) {
+function getFirstName(email) {
   for (let i = 0; i < employeeList.length; i++) {
     if (employeeList[i].Email === email) {
       return employeeList[i].FirstName;
+    }
+  }
+}
+
+// get the firstname associated with a valid ZGBC email
+function getLastName(email) {
+  for (let i = 0; i < employeeList.length; i++) {
+    if (employeeList[i].Email === email) {
+      return employeeList[i].LastName;
     }
   }
 }
@@ -94,9 +103,13 @@ function Home({ navigation }) {
       // store the email
       await _storeData(email);
       // take them to the next page here!
-      // alert(`Hello ${getName(email)}.`);
+      // alert(`Hello ${getFirstName(email)}.`);
 
-      navigation.navigate('Symptoms', { name: getName(email), email });
+      navigation.navigate('Symptoms', {
+        firstName: getFirstName(email),
+        lastName: getLastName(email),
+        email,
+      });
     } else {
       alert('Please enter a valid ZGBC email.');
     }
@@ -105,20 +118,21 @@ function Home({ navigation }) {
   // if the user has logged in before, just skip to check-in (no auto submit)
   // if (isLoggedIn && validateName(email) && button) {
   //   console.log('email is:', email);
-  //   console.log('first name is:', getName(email));
-  //   navigation.navigate('Symptoms', { name: getName(email) });
+  //   console.log('first name is:', getFirstName(email));
+  //   navigation.navigate('Symptoms', { name: getFirstName(email) });
   // }
   //  else if (isLoggedIn && validateName(email)) {
-  //   navigation.navigate('Symptoms', { name: getName(email) });
+  //   navigation.navigate('Symptoms', { name: getFirstName(email) });
   // }
 
   // if the user has logged in before, just skip to check-in (no auto submit)
   (async () => {
-    const retreived = await _retrieveData();
-    if (retreived) {
+    const email = await _retrieveData();
+    if (email) {
       navigation.navigate('Symptoms', {
-        name: getName(retreived),
-        email: retreived,
+        firstName: getFirstName(email),
+        lastName: getLastName(email),
+        email: email,
       });
     }
   })();
@@ -135,10 +149,10 @@ function Home({ navigation }) {
       <TextInput
         style={styles.input}
         // returnKeyType='done'
-        underlineColorAndroid='transparent'
-        placeholder='Email'
-        placeholderTextColor='black'
-        autoCapitalize='none'
+        underlineColorAndroid="transparent"
+        placeholder="Email"
+        placeholderTextColor="black"
+        autoCapitalize="none"
         onChangeText={(text) => setEmail(text)}
         value={email}
         onSubmitEditing={() => login(email)}
