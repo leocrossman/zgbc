@@ -62,7 +62,6 @@ function validateName(email) {
 
 // grab passcode from super secret file
 const { SECRET_PASS } = require('../SECRET_PASS.json');
-console.log(SECRET_PASS);
 function validatePass(pass) {
   return pass === SECRET_PASS;
 }
@@ -93,8 +92,8 @@ function Home({ navigation }) {
   const [pass, setPass] = useState('');
   const [button, setButton] = useState(isLoggedIn);
 
-  let emailIsValid = validateName(email);
-  console.log('emailIsValid:', emailIsValid);
+  // let emailIsValid = validateName(email);
+  // console.log('emailIsValid:', emailIsValid);
   const login = async (email, pass) => {
     if (validateName(email) && validatePass(pass)) {
       // store the email
