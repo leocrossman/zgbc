@@ -7,21 +7,20 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import config from '../firebaseCredentials';
-import { NavigationEvents } from 'react-navigation';
+
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
 const employeeList = require('../EmployeeInfo.json');
-
-// import './components/Loading';
-// import Loading from './Loading';
 
 const _storeData = async (data) => {
   try {
@@ -61,6 +60,13 @@ function validateName(email) {
   return false;
 }
 
+// grab passcode from super secret file
+const { SECRET_PASS } = require('../SECRET_PASS.json');
+console.log(SECRET_PASS);
+function validatePass(pass) {
+  return pass === SECRET_PASS;
+}
+
 // get the firstname associated with a valid ZGBC email
 function getFirstName(email) {
   for (let i = 0; i < employeeList.length; i++) {
@@ -84,24 +90,23 @@ const isLoggedIn = (email) => validateName(email);
 function Home({ navigation }) {
   // state hook declarations
   const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
   const [button, setButton] = useState(isLoggedIn);
 
   let emailIsValid = validateName(email);
   console.log('emailIsValid:', emailIsValid);
-  const login = async (email) => {
-    if (validateName(email)) {
+  const login = async (email, pass) => {
+    if (validateName(email) && validatePass(pass)) {
       // store the email
       await _storeData(email);
       // take them to the next page here!
-      // alert(`Hello ${getFirstName(email)}.`);
-
       navigation.navigate('Symptoms', {
         firstName: getFirstName(email),
         lastName: getLastName(email),
         email,
       });
     } else {
-      alert('Please enter a valid ZGBC email.');
+      alert('Please enter a valid ZGBC email and passcode.');
     }
   };
 
@@ -128,35 +133,52 @@ function Home({ navigation }) {
   })();
 
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        // resizeMode='cover'
-        // source={require('./assets/ZG_1024x1024.t.png')}
-        source={require('../assets/ZGBC_logo.png')}
-      ></Image>
-      <Text style={styles.title}>Welcome to the ZGBC App</Text>
-      <TextInput
-        style={styles.input}
-        // returnKeyType='done'
-        underlineColorAndroid="transparent"
-        placeholder="Email"
-        placeholderTextColor="black"
-        autoCapitalize="none"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        onSubmitEditing={() => login(email)}
-      />
-
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={() => {
-          login(email);
-        }}
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        keyboardDismissMode={'on-drag'}
       >
-        <Text style={styles.submitButtonText}> Check in </Text>
-      </TouchableOpacity>
-    </View>
+        <Image
+          style={styles.logo}
+          // resizeMode='cover'
+          // source={require('./assets/ZG_1024x1024.t.png')}
+          source={require('../assets/ZGBC_logo.png')}
+        ></Image>
+        <Text style={styles.title}>Welcome to the ZGBC App</Text>
+        <TextInput
+          style={styles.input}
+          // returnKeyType='done'
+          underlineColorAndroid="transparent"
+          placeholder="Email"
+          placeholderTextColor="black"
+          autoCapitalize="none"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={styles.input}
+          // returnKeyType='done'
+          underlineColorAndroid="transparent"
+          placeholder="Passcode"
+          placeholderTextColor="black"
+          autoCapitalize="none"
+          onChangeText={(text) => setPass(text)}
+          value={pass}
+          onSubmitEditing={() => login(email, pass)}
+          secureTextEntry={true}
+        />
+
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => {
+            login(email, pass);
+          }}
+        >
+          <Text style={styles.submitButtonText}> Check in </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -188,7 +210,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    padding: 40,
+    // padding: 40,
     textAlign: 'center',
     // marginTop: 50,
     // justifyContent: 'center',
@@ -206,4 +228,5 @@ const styles = StyleSheet.create({
   },
 });
 
+export { getFirstName, getLastName };
 export default Home;

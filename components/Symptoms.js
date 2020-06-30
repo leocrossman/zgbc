@@ -12,6 +12,8 @@ import {
 // import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { getFirstName, getLastName } from './Home';
+
 import { TouchableHighlight } from 'react-native-gesture-handler';
 // import { Switch } from 'react-native-switch';
 
@@ -31,7 +33,7 @@ function Symptoms({ navigation }) {
   const lastName = navigation.state.params.lastName;
   const email = navigation.state.params.email;
 
-  console.log('here is the nav object:\n');
+  console.log('here is the nav object on the Symptoms screen:\n');
   console.log(navigation);
 
   const toggleSwitch1 = () => setIsEnabled1((previousState) => !previousState);
@@ -60,14 +62,21 @@ function Symptoms({ navigation }) {
       body: JSON.stringify(responses),
     });
 
+    navigation.navigate('SubmitScreen', {
+      firstName: getFirstName(email),
+      lastName: getLastName(email),
+      email: email,
+      cleared,
+    });
+
     // if any response is `Yes`, do not allow into the office
-    if (isEnabled1 || isEnabled2 || isEnabled3) {
-      alert(
-        'Responses submitted.\nDo not proceed to the office.\n Call ### for more info.'
-      );
-    } else {
-      alert('Responses submitted.\nAll clear to proceed to the office.');
-    }
+    // if (isEnabled1 || isEnabled2 || isEnabled3) {
+    //   alert(
+    //     'Responses submitted.\nDo not proceed to the office.\n Call ### for more info.'
+    //   );
+    // } else {
+    //   alert('Responses submitted.\nAll clear to proceed to the office.');
+    // }
   };
 
   const onPressCancel = async () => {
@@ -84,7 +93,7 @@ function Symptoms({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView
         style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
+        // showsVerticalScrollIndicator={false}
       >
         <Image
           style={styles.logo}
@@ -97,35 +106,39 @@ function Symptoms({ navigation }) {
           ranging from mild symptoms to severe illness.
         </Text>
         <Text style={styles.infoText}>
-          Symptoms may appear 2-14 days after exposure to the vlrus. People with
+          Symptoms may appear 2-14 days after exposure to the virus. People with
           these symptoms may have COVID-19:
         </Text>
-        <Text style={styles.bullet}>- Fever or chills</Text>
-        <Text style={styles.bullet}>- Cough</Text>
-        <Text style={styles.bullet}>
-          - Shortness of breath or difficulty breathing
-        </Text>
-        <Text style={styles.bullet}>- Fatigue</Text>
-        <Text style={styles.bullet}>- Muscle or body aches</Text>
-        <Text style={styles.bullet}>- Headache</Text>
-        <Text style={styles.bullet}>- New loss of taste or smell</Text>
-        <Text style={styles.bullet}>- Sore Throat</Text>
-        <Text style={styles.bullet}>- Congestion or runny nose</Text>
-        <Text style={styles.bullet}>- Nausea or vomiting</Text>
+        <View style={styles.list}>
+          <Text style={styles.bullet}>- Fever or chills</Text>
+          <Text style={styles.bullet}>- Cough</Text>
+          <Text style={styles.bullet}>
+            - Shortness of breath or difficulty breathing
+          </Text>
+          <Text style={styles.bullet}>- Fatigue</Text>
+          <Text style={styles.bullet}>- Muscle or body aches</Text>
+          <Text style={styles.bullet}>- Headache</Text>
+          <Text style={styles.bullet}>- New loss of taste or smell</Text>
+          <Text style={styles.bullet}>- Sore Throat</Text>
+          <Text style={styles.bullet}>- Congestion or runny nose</Text>
+          <Text style={styles.bullet}>- Nausea or vomiting</Text>
+        </View>
         <Text style={styles.infoText}>
-          This list does not include all possible symptoms. CDC will continue to
-          update this list as we learn more about COVID-19.
+          This list does not include all possible symptoms. The CDC will
+          continue to update this list as we learn more about COVID-19.
         </Text>
         <Text style={styles.headerText}>
           When to Seek Emergency Medical Attention
         </Text>
-        <Text style={styles.bullet}>- Trouble breathing</Text>
-        <Text style={styles.bullet}>
-          - Persistent pain or pressure in the chest
-        </Text>
-        <Text style={styles.bullet}>- New confusion</Text>
-        <Text style={styles.bullet}>- Inability to wake or stay awake</Text>
-        <Text style={styles.bullet}>- Bluish lips or face</Text>
+        <View style={styles.list}>
+          <Text style={styles.bullet}>- Trouble breathing</Text>
+          <Text style={styles.bullet}>
+            - Persistent pain or pressure in the chest
+          </Text>
+          <Text style={styles.bullet}>- New confusion</Text>
+          <Text style={styles.bullet}>- Inability to wake or stay awake</Text>
+          <Text style={styles.bullet}>- Bluish lips or face</Text>
+        </View>
 
         <Text style={styles.headerText}>Employee Screening Questions</Text>
         <Text style={styles.question}>
@@ -204,7 +217,7 @@ const styles = StyleSheet.create({
   },
   name: {
     textAlign: 'left',
-    fontSize: 24,
+    fontSize: 18,
     // marginTop: 10,
   },
   headerText: {
@@ -216,7 +229,11 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 18,
-    marginTop: 20,
+    // marginTop: 20,
+  },
+  list: {
+    marginTop: 10,
+    marginBottom: 10,
   },
   bullet: {
     padding: 5,
@@ -224,7 +241,7 @@ const styles = StyleSheet.create({
   },
   question: {
     marginTop: 20,
-    fontSize: 24,
+    fontSize: 18,
     marginBottom: 20,
   },
   switchView: {

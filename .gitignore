@@ -16,6 +16,7 @@ firebaseCredentials.js
 *.csv
 *.pdf
 spreadsheetId_secret.json
+SECRET_PASS.json
 
 # macOS
 .DS_Store
