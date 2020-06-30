@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
   SafeAreaView,
   ScrollView,
-  // KeyboardAvoidingView,
   View,
   Switch,
   Image,
 } from 'react-native';
-// import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { getFirstName, getLastName } from './Home';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
-// import { Switch } from 'react-native-switch';
-
-// disable warnings - DANGEROUS!
-import { YellowBox } from 'react-native';
-YellowBox.ignoreWarnings([
-  'VirtualizedLists should never be nested', // TODO: Remove when fixed
-]);
-console.disableYellowBox = true;
 
 function Symptoms({ navigation }) {
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -33,8 +23,8 @@ function Symptoms({ navigation }) {
   const lastName = navigation.state.params.lastName;
   const email = navigation.state.params.email;
 
-  console.log('here is the nav object on the Symptoms screen:\n');
-  console.log(navigation);
+  // console.log('here is the nav object on the Symptoms screen:\n');
+  // console.log(navigation);
 
   const toggleSwitch1 = () => setIsEnabled1((previousState) => !previousState);
   const toggleSwitch2 = () => setIsEnabled2((previousState) => !previousState);
@@ -68,15 +58,6 @@ function Symptoms({ navigation }) {
       email: email,
       cleared,
     });
-
-    // if any response is `Yes`, do not allow into the office
-    // if (isEnabled1 || isEnabled2 || isEnabled3) {
-    //   alert(
-    //     'Responses submitted.\nDo not proceed to the office.\n Call ### for more info.'
-    //   );
-    // } else {
-    //   alert('Responses submitted.\nAll clear to proceed to the office.');
-    // }
   };
 
   const onPressCancel = async () => {
@@ -206,10 +187,7 @@ function Symptoms({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     backgroundColor: '#F5FCFF',
@@ -218,18 +196,15 @@ const styles = StyleSheet.create({
   name: {
     textAlign: 'left',
     fontSize: 18,
-    // marginTop: 10,
   },
   headerText: {
     fontSize: 32,
-    // padding: 50,
     marginTop: 20,
     marginBottom: 20,
     fontWeight: 'bold',
   },
   infoText: {
     fontSize: 18,
-    // marginTop: 20,
   },
   list: {
     marginTop: 10,
@@ -245,7 +220,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   switchView: {
-    // backgroundColor: 'black',
     alignItems: 'flex-end',
     marginRight: 30,
   },
@@ -254,14 +228,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   logo: {
-    // flex: 1,
     width: null,
     height: 200,
     resizeMode: 'contain',
     margin: 10,
-    // borderColor: 'black',
-    // borderWidth: 5,
-    // backgroundColor: 'orange',
   },
   button: {
     height: 36,
@@ -278,14 +248,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     alignSelf: 'center',
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    marginTop: 0,
-    padding: 10, // 20
-    backgroundColor: '#881124',
-    textAlignVertical: 'top',
   },
 });
 

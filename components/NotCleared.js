@@ -1,33 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  // KeyboardAvoidingView,
-  View,
-  Switch,
-  Image,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon } from 'react-native-elements';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
-// disable warnings - DANGEROUS!
-import { YellowBox } from 'react-native';
-YellowBox.ignoreWarnings([
-  'VirtualizedLists should never be nested', // TODO: Remove when fixed
-]);
-console.disableYellowBox = true;
-
 function NotCleared({ props }) {
-  console.log('here is the props/nav object:\n');
+  //   console.log('here is the props/nav object:\n');
   const { navigation } = props;
   const firstName = navigation.state.params.firstName;
-  const lastName = navigation.state.params.lastName;
-  const email = navigation.state.params.email;
-  const cleared = navigation.state.params.cleared;
 
   const onPressCancel = async () => {
     try {
@@ -67,16 +48,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 10,
     marginBottom: 10,
-  },
-  logo: {
-    // flex: 1,
-    width: null,
-    height: 200,
-    resizeMode: 'contain',
-    margin: 10,
-    // borderColor: 'black',
-    // borderWidth: 5,
-    // backgroundColor: 'orange',
   },
   button: {
     height: 36,

@@ -157,7 +157,7 @@ function Home({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          // returnKeyType='done'
+          returnKeyType="done"
           underlineColorAndroid="transparent"
           placeholder="Passcode"
           placeholderTextColor="black"
