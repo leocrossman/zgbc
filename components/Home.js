@@ -79,16 +79,6 @@ function getLastName(email) {
   }
 }
 
-// maybe uncomment? TO DO: COME Back
-// (async () => {
-//   if (await _retrieveData()) {
-//     let storedEmail = await _retrieveData();
-//     console.log('the stored email is: ', storedEmail);
-//     const isKnown = validateName(storedEmail);
-//     console.log(isKnown);
-//   }
-// })();
-
 const isLoggedIn = (email) => validateName(email);
 
 function Home({ navigation }) {

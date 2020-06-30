@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 // import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 // import { Switch } from 'react-native-switch';
@@ -49,7 +50,7 @@ function Symptoms({ navigation }) {
     cleared,
   };
 
-  const onPress = () => {
+  const onPressSubmit = () => {
     fetch('https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms', {
       method: 'POST',
       headers: {
@@ -66,6 +67,16 @@ function Symptoms({ navigation }) {
       );
     } else {
       alert('Responses submitted.\nAll clear to proceed to the office.');
+    }
+  };
+
+  const onPressCancel = async () => {
+    try {
+      await AsyncStorage.removeItem('userEmail');
+      console.log('ASyncStorage Cleared (Email Removed).');
+      navigation.navigate('Home');
+    } catch (error) {
+      console.log('Something went wrong clearing the ASyncStorage...', error);
     }
   };
 
@@ -118,7 +129,7 @@ function Symptoms({ navigation }) {
 
         <Text style={styles.headerText}>Employee Screening Questions</Text>
         <Text style={styles.question}>
-          1. Have you have experienced any COVID-19 symptomps in the past 14
+          1. Have you have experienced any COVID-19 symptoms in the past 14
           days?
         </Text>
         <View style={styles.switchView}>
@@ -161,10 +172,18 @@ function Symptoms({ navigation }) {
         </View>
         <TouchableHighlight
           style={styles.button}
-          onPress={onPress}
+          onPress={onPressSubmit}
           underlayColor="#99d9f4"
         >
           <Text style={styles.buttonText}>Submit</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          style={styles.button}
+          onPress={onPressCancel}
+          underlayColor="#99d9f4"
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
         </TouchableHighlight>
       </ScrollView>
     </SafeAreaView>
