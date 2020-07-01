@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "zgbc-checkin",
+    "name": "ZGBC Checkin",
     "slug": "zgbc-checkin",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
