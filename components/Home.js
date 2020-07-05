@@ -12,7 +12,14 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import * as firebase from 'firebase';
+// import Geolocation from '@react-native-community/geolocation';
+
+// Geolocation.getCurrentPosition((info) => console.log(info));
+
+// look at this...
+// docs.expo.io/versions/latest/sdk/location/
+
+https: import * as firebase from 'firebase';
 import 'firebase/auth';
 import config from '../firebaseCredentials';
 

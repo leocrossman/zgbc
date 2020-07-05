@@ -3,7 +3,7 @@
     "name": "ZGBC Checkin",
     "slug": "zgbc-checkin",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/ZG_1024x1024.w.png",
     "splash": {
@@ -16,7 +16,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.leocrossman.zgbc-checkin"
+    },
+    "android": {
+      "package": "com.leocrossman.zgbc_checkin",
+      "versionCode": 1
     }
   }
 }
