@@ -9,6 +9,8 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -117,16 +119,6 @@ function Home({ navigation }) {
   };
 
   // if the user has logged in before, just skip to check-in (no auto submit)
-  // if (isLoggedIn && validateName(email) && button) {
-  //   console.log('email is:', email);
-  //   console.log('first name is:', getFirstName(email));
-  //   navigation.navigate('Symptoms', { name: getFirstName(email) });
-  // }
-  //  else if (isLoggedIn && validateName(email)) {
-  //   navigation.navigate('Symptoms', { name: getFirstName(email) });
-  // }
-
-  // if the user has logged in before, just skip to check-in (no auto submit)
   (async () => {
     const email = await _retrieveData();
     if (email) {
@@ -174,11 +166,11 @@ function Home({ navigation }) {
           onSubmitEditing={() => login(email, pass)}
           secureTextEntry={true}
         />
-
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => {
             login(email, pass);
+            Keyboard.dismiss();
           }}
         >
           <Text style={styles.submitButtonText}> Check in </Text>
