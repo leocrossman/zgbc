@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 // look at this...
 // docs.expo.io/versions/latest/sdk/location/
 
-https: import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 import 'firebase/auth';
 import config from '../firebaseCredentials';
 
@@ -155,20 +155,20 @@ function Home({ navigation }) {
         <TextInput
           style={styles.input}
           // returnKeyType='done'
-          underlineColorAndroid="transparent"
-          placeholder="Email"
-          placeholderTextColor="black"
-          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+          placeholder='Email'
+          placeholderTextColor='black'
+          autoCapitalize='none'
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
         <TextInput
           style={styles.input}
-          returnKeyType="done"
-          underlineColorAndroid="transparent"
-          placeholder="Passcode"
-          placeholderTextColor="black"
-          autoCapitalize="none"
+          returnKeyType='done'
+          underlineColorAndroid='transparent'
+          placeholder='Passcode'
+          placeholderTextColor='black'
+          autoCapitalize='none'
           onChangeText={(text) => setPass(text)}
           value={pass}
           onSubmitEditing={() => login(email, pass)}
