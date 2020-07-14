@@ -5,6 +5,8 @@ import { Icon } from 'react-native-elements';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
+const currentDay = new Date();
+
 function Cleared({ props }) {
   //   console.log('here is the props/nav object:\n');
   const { navigation } = props;
@@ -25,15 +27,15 @@ function Cleared({ props }) {
       <Text style={styles.infoText}>Thank you {firstName}. </Text>
       <Text style={styles.infoText}>
         Your responses have been submitted and you are clear to proceed to the
-        office.
+        office today, {currentDay.toDateString()}.
       </Text>
-      <Icon name="check-circle" color="#00FF00" size={100} />
+      <Icon name='check-circle' color='#00FF00' size={100} />
       <TouchableHighlight
         style={styles.button}
         onPress={onPressCancel}
-        underlayColor="#99d9f4"
+        underlayColor='#99d9f4'
       >
-        <Text style={styles.buttonText}>Log Out</Text>
+        <Text style={styles.buttonText}>Sign in for a different day</Text>
       </TouchableHighlight>
     </View>
   );

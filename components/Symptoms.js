@@ -13,6 +13,16 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { getFirstName, getLastName } from './Home';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel,
+} from 'react-native-simple-radio-button';
+
+const radio_props = [
+  { label: 'No', value: 0 },
+  { label: 'Yes', value: 1 },
+];
 
 function Symptoms({ navigation }) {
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -127,27 +137,29 @@ function Symptoms({ navigation }) {
           days?
         </Text>
         <View style={styles.switchView}>
-          <Text style={styles.answer}>{isEnabled1 ? 'Yes' : 'No'}</Text>
-          <Switch
+          {/* <Text style={styles.answer}>{isEnabled1 ? 'Yes' : 'No'}</Text> */}
+          <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            onPress={toggleSwitch1}
+          />
+          {/* <Switch
             trackColor={{ false: '#767577', true: '#81b0ff' }}
             thumbColor={isEnabled1 ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
+            ios_backgroundColor='#3e3e3e'
             onValueChange={toggleSwitch1}
             value={isEnabled1}
-          />
+          /> */}
         </View>
 
         <Text style={styles.question}>
           2. Have you had any positive COVID-19 tests in the past 14 days?
         </Text>
         <View style={styles.switchView}>
-          <Text style={styles.answer}>{isEnabled2 ? 'Yes' : 'No'}</Text>
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled2 ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch2}
-            value={isEnabled2}
+          <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            onPress={toggleSwitch2}
           />
         </View>
         <Text style={styles.question}>
@@ -155,19 +167,16 @@ function Symptoms({ navigation }) {
           cases in the past 14 days?
         </Text>
         <View style={styles.switchView}>
-          <Text style={styles.answer}>{isEnabled3 ? 'Yes' : 'No'}</Text>
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled3 ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch3}
-            value={isEnabled3}
+          <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            onPress={toggleSwitch3}
           />
         </View>
         <TouchableHighlight
           style={styles.button}
           onPress={onPressSubmit}
-          underlayColor="#99d9f4"
+          underlayColor='#99d9f4'
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableHighlight>
@@ -175,7 +184,7 @@ function Symptoms({ navigation }) {
         <TouchableHighlight
           style={styles.button}
           onPress={onPressCancel}
-          underlayColor="#99d9f4"
+          underlayColor='#99d9f4'
         >
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableHighlight>

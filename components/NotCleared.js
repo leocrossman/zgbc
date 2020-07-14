@@ -5,6 +5,8 @@ import { Icon } from 'react-native-elements';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
+const currentDay = new Date();
+
 function NotCleared({ props }) {
   //   console.log('here is the props/nav object:\n');
   const { navigation } = props;
@@ -24,16 +26,17 @@ function NotCleared({ props }) {
     <View styles={styles.container}>
       <Text style={styles.infoText}>Thank you {firstName}. </Text>
       <Text style={styles.infoText}>
-        Your responses have been submitted. Do not proceed to the office. Call
-        Erin Leary's office phone at 212.500.4730 for more info.
+        Your responses have been submitted. Do not proceed to the office today,{' '}
+        {currentDay.toDateString()}. Call Erin Leary's office phone at
+        212.500.4730 for more info.
       </Text>
-      <Icon name="x-square" color="#FF0000" size={100} type="feather" />
+      <Icon name='x-square' color='#FF0000' size={100} type='feather' />
       <TouchableHighlight
         style={styles.button}
         onPress={onPressCancel}
-        underlayColor="#99d9f4"
+        underlayColor='#99d9f4'
       >
-        <Text style={styles.buttonText}>Log Out</Text>
+        <Text style={styles.buttonText}>Sign in for a different day</Text>
       </TouchableHighlight>
     </View>
   );
@@ -55,10 +58,11 @@ const styles = StyleSheet.create({
     borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 40,
     alignSelf: 'stretch',
     justifyContent: 'center',
     marginTop: 40,
+    padding: 20,
   },
   buttonText: {
     fontSize: 18,
