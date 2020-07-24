@@ -18,5 +18,6 @@ firebaseCredentials.js
 spreadsheetId_secret.json
 SECRET_PASS.json
 
+
 # macOS
 .DS_Store

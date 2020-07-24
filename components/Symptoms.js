@@ -7,6 +7,7 @@ import {
   View,
   Switch,
   Image,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -19,22 +20,24 @@ import RadioForm, {
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 
-const radio_props = [
-  { label: 'No', value: 0 },
-  { label: 'Yes', value: 1 },
-];
+import axios from 'axios';
 
 function Symptoms({ navigation }) {
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
 
+  const radio_props = [
+    { label: 'No', value: 0 },
+    { label: 'Yes', value: 1 },
+  ];
+
   const firstName = navigation.state.params.firstName;
   const lastName = navigation.state.params.lastName;
   const email = navigation.state.params.email;
 
-  // console.log('here is the nav object on the Symptoms screen:\n');
-  // console.log(navigation);
+  console.log('here is the nav object on the Symptoms screen:\n');
+  console.log(navigation);
 
   const toggleSwitch1 = () => setIsEnabled1((previousState) => !previousState);
   const toggleSwitch2 = () => setIsEnabled2((previousState) => !previousState);
@@ -51,17 +54,56 @@ function Symptoms({ navigation }) {
     q3: isEnabled3,
     cleared,
   };
+  // alert(JSON.stringify(responses));
 
-  const onPressSubmit = () => {
-    fetch('https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(responses),
-    });
+  const onPressSubmit = async () => {
+    if (Platform.OS === 'web') {
+      alert('on web');
+      // const xhr = new XMLHttpRequest();
+      // xhr.open(
+      //   'POST',
+      //   'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms'
+      // );
+      // //Send the proper header information along with the request
+      // xhr.setRequestHeader('Accept', 'application/json');
+      // xhr.setRequestHeader('Content-Type', 'application/json');
 
+      // xhr.send(JSON.stringify(responses));
+      // try {
+      //   await axios.post(
+      //     `https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms`,
+      //     responses
+      //   );
+      // } catch (error) {
+      //   alert(JSON.stringify(error));
+      // }
+      fetch(
+        'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
+        {
+          method: 'POST',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(responses),
+        }
+      );
+    } else {
+      alert('not web');
+      fetch(
+        'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(responses),
+        }
+      );
+    }
     navigation.navigate('SubmitScreen', {
       firstName: getFirstName(email),
       lastName: getLastName(email),
@@ -140,8 +182,9 @@ function Symptoms({ navigation }) {
           {/* <Text style={styles.answer}>{isEnabled1 ? 'Yes' : 'No'}</Text> */}
           <RadioForm
             radio_props={radio_props}
-            initial={0}
+            // initial={0}
             onPress={toggleSwitch1}
+            // value={isEnabled1}
           />
           {/* <Switch
             trackColor={{ false: '#767577', true: '#81b0ff' }}
@@ -158,8 +201,9 @@ function Symptoms({ navigation }) {
         <View style={styles.switchView}>
           <RadioForm
             radio_props={radio_props}
-            initial={0}
+            // initial={0}
             onPress={toggleSwitch2}
+            // value={isEnabled2}
           />
         </View>
         <Text style={styles.question}>
@@ -169,8 +213,9 @@ function Symptoms({ navigation }) {
         <View style={styles.switchView}>
           <RadioForm
             radio_props={radio_props}
-            initial={0}
+            // initial={0}
             onPress={toggleSwitch3}
+            // value={isEnabled3}
           />
         </View>
         <TouchableHighlight

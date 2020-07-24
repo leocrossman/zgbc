@@ -54,7 +54,17 @@ const correctTime = (date) => {
 };
 
 exports.submitSymptoms = functions.https.onRequest(async (req, res) => {
-  console.log('received the request.');
+  // if (req.method === `OPTIONS`) {
+  //   res
+  //     .set('Access-Control-Allow-Origin', '*')
+  //     .set('Access-Control-Allow-Methods', 'GET, POST');
+  // }
+
+  // res.set('Access-Control-Allow-Origin', '*');
+  // res.set('Access-Control-Allow-Methods', 'GET, POST');
+  console.log('Received the request');
+  console.log(req.body);
+  // console.log('Received the request. Here is the res object:\n', res);
   try {
     const { spreadsheetId } = require('./spreadsheetId_secret.json');
 

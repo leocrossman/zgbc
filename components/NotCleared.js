@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center',
     marginTop: 40,
-    padding: 20,
+    // padding: 20,
   },
   buttonText: {
     fontSize: 18,
