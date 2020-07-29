@@ -54,62 +54,33 @@ function Symptoms({ navigation }) {
     q3: isEnabled3,
     cleared,
   };
-  // alert(JSON.stringify(responses));
 
   const onPressSubmit = async () => {
-    if (Platform.OS === 'web') {
-      alert('on web');
-      // const xhr = new XMLHttpRequest();
-      // xhr.open(
-      //   'POST',
-      //   'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms'
-      // );
-      // //Send the proper header information along with the request
-      // xhr.setRequestHeader('Accept', 'application/json');
-      // xhr.setRequestHeader('Content-Type', 'application/json');
-
-      // xhr.send(JSON.stringify(responses));
-      // try {
-      //   await axios.post(
-      //     `https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms`,
-      //     responses
-      //   );
-      // } catch (error) {
-      //   alert(JSON.stringify(error));
-      // }
-      fetch(
-        'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
-        {
-          method: 'POST',
-          headers: {
-            // Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(responses),
-          // body: responses,
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          alert('Success:', JSON.stringify(data));
-        })
-        .catch((error) => {
-          alert(`Error: ${JSON.stringify(error)}`);
-        });
-    } else {
-      alert('not web');
-      fetch(
-        'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(responses),
-        }
-      );
-    }
+    // if (Platform.OS === 'web') {
+    // alert('on web');
+    fetch('https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms', {
+      method: 'POST',
+      headers: {
+        // Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(responses),
+    });
+    // alert(JSON.stringify(responses));
+    // } else {
+    // alert('not web');
+    // fetch(
+    //   'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(responses),
+    //   }
+    // );
+    // }
     navigation.navigate('SubmitScreen', {
       firstName: getFirstName(email),
       lastName: getLastName(email),
