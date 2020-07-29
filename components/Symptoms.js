@@ -81,15 +81,21 @@ function Symptoms({ navigation }) {
         'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
         {
           method: 'POST',
-          mode: 'cors',
-          credentials: 'include',
           headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(responses),
+          // body: responses,
         }
-      );
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          alert('Success:', JSON.stringify(data));
+        })
+        .catch((error) => {
+          alert(`Error: ${JSON.stringify(error)}`);
+        });
     } else {
       alert('not web');
       fetch(
@@ -221,7 +227,7 @@ function Symptoms({ navigation }) {
         <TouchableHighlight
           style={styles.button}
           onPress={onPressSubmit}
-          underlayColor='#99d9f4'
+          underlayColor="#99d9f4"
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableHighlight>
@@ -229,7 +235,7 @@ function Symptoms({ navigation }) {
         <TouchableHighlight
           style={styles.button}
           onPress={onPressCancel}
-          underlayColor='#99d9f4'
+          underlayColor="#99d9f4"
         >
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableHighlight>

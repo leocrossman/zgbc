@@ -1,10 +1,19 @@
 const functions = require('firebase-functions');
+const cors = require('cors')({ origin: true });
 
 const admin = require('firebase-admin');
 admin.initializeApp();
 
 const { google } = require('googleapis');
 const { promisify } = require('util');
+
+// // Imports the Google Cloud client library
+// const { Logging } = require('@google-cloud/logging');
+
+// // Creates a client
+// const logging = new Logging();
+
+// const logName = 'Name of the log from which to list entries, e.g. my-log';
 
 function sameDay(d1, d2) {
   if (!(d1 instanceof Date)) return false; // if not a date, make a new day
@@ -54,16 +63,12 @@ const correctTime = (date) => {
 };
 
 exports.submitSymptoms = functions.https.onRequest(async (req, res) => {
-  // if (req.method === `OPTIONS`) {
-  //   res
-  //     .set('Access-Control-Allow-Origin', '*')
-  //     .set('Access-Control-Allow-Methods', 'GET, POST');
-  // }
-
-  // res.set('Access-Control-Allow-Origin', '*');
-  // res.set('Access-Control-Allow-Methods', 'GET, POST');
+  cors(req, res, () => {}); // CORS EMPTY CALLBACK ALLOWS CROSS-SITE HTTP REQUESTS!!!
   console.log('Received the request');
-  console.log(req.body);
+  functions.logger.log("Here's the req.body object:", JSON.stringify(req.body));
+  functions.logger.log("Here's the req object:", req);
+  functions.logger.log("Here's the res object:", res);
+
   // console.log('Received the request. Here is the res object:\n', res);
   try {
     const { spreadsheetId } = require('./spreadsheetId_secret.json');

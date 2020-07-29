@@ -17,6 +17,7 @@ firebaseCredentials.js
 *.pdf
 spreadsheetId_secret.json
 SECRET_PASS.json
+EmployeeInfo.json
 
 
 # macOS
