@@ -147,20 +147,20 @@ function Home({ navigation }) {
         <TextInput
           style={styles.input}
           // returnKeyType='done'
-          underlineColorAndroid='transparent'
-          placeholder='Email'
-          placeholderTextColor='black'
-          autoCapitalize='none'
+          underlineColorAndroid="transparent"
+          placeholder="Email"
+          placeholderTextColor="black"
+          autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
         <TextInput
           style={styles.input}
-          returnKeyType='done'
-          underlineColorAndroid='transparent'
-          placeholder='Passcode'
-          placeholderTextColor='black'
-          autoCapitalize='none'
+          returnKeyType="done"
+          underlineColorAndroid="transparent"
+          placeholder="Passcode"
+          placeholderTextColor="black"
+          autoCapitalize="none"
           onChangeText={(text) => setPass(text)}
           value={pass}
           onSubmitEditing={() => login(email, pass)}

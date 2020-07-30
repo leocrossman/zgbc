@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,13 +19,23 @@ import RadioForm, {
   RadioButtonInput,
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
-
-import axios from 'axios';
+// import { useIsMount } from './useIsMount';
 
 function Symptoms({ navigation }) {
+  // const isMount = useIsMount();
+
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
+
+  // useEffect(() => {
+  //   if (isMount) {
+  //     console.log('First Render');
+  //   } else {
+  //     console.log('Subsequent Render');
+  //     alert('changed a button');
+  //   }
+  // }, [isEnabled1, isEnabled2, isEnabled3]);
 
   const radio_props = [
     { label: 'No', value: 0 },
@@ -36,8 +46,8 @@ function Symptoms({ navigation }) {
   const lastName = navigation.state.params.lastName;
   const email = navigation.state.params.email;
 
-  console.log('here is the nav object on the Symptoms screen:\n');
-  console.log(navigation);
+  // console.log('here is the nav object on the Symptoms screen:\n');
+  // console.log(navigation);
 
   const toggleSwitch1 = () => setIsEnabled1((previousState) => !previousState);
   const toggleSwitch2 = () => setIsEnabled2((previousState) => !previousState);
@@ -56,31 +66,13 @@ function Symptoms({ navigation }) {
   };
 
   const onPressSubmit = async () => {
-    // if (Platform.OS === 'web') {
-    // alert('on web');
     fetch('https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms', {
       method: 'POST',
       headers: {
-        // Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(responses),
     });
-    // alert(JSON.stringify(responses));
-    // } else {
-    // alert('not web');
-    // fetch(
-    //   'https://us-central1-zgbc-267b9.cloudfunctions.net/submitSymptoms',
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(responses),
-    //   }
-    // );
-    // }
     navigation.navigate('SubmitScreen', {
       firstName: getFirstName(email),
       lastName: getLastName(email),
@@ -156,20 +148,12 @@ function Symptoms({ navigation }) {
           days?
         </Text>
         <View style={styles.switchView}>
-          {/* <Text style={styles.answer}>{isEnabled1 ? 'Yes' : 'No'}</Text> */}
           <RadioForm
             radio_props={radio_props}
-            // initial={0}
+            // initial={-1}
             onPress={toggleSwitch1}
             // value={isEnabled1}
           />
-          {/* <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled1 ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor='#3e3e3e'
-            onValueChange={toggleSwitch1}
-            value={isEnabled1}
-          /> */}
         </View>
 
         <Text style={styles.question}>
@@ -178,7 +162,7 @@ function Symptoms({ navigation }) {
         <View style={styles.switchView}>
           <RadioForm
             radio_props={radio_props}
-            // initial={0}
+            // initial={-1}
             onPress={toggleSwitch2}
             // value={isEnabled2}
           />
@@ -190,7 +174,7 @@ function Symptoms({ navigation }) {
         <View style={styles.switchView}>
           <RadioForm
             radio_props={radio_props}
-            // initial={0}
+            // initial={-1}
             onPress={toggleSwitch3}
             // value={isEnabled3}
           />
