@@ -15,7 +15,7 @@
   "dependencies": {
     "@google-cloud/logging": "^8.0.1",
     "cors": "^2.8.5",
-    "firebase-admin": "^8.10.0",
+    "firebase-admin": "^11.4.1",
     "firebase-functions": "^3.6.1",
     "googleapis": "^52.1.0",
     "util": "^0.12.3"
